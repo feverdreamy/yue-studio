@@ -1,0 +1,92 @@
+YUÈ STUDIO — START HERE
+
+FIRST TIME
+1. Extract the whole ZIP into a writable folder. Keep its folders together.
+2. Double-click "1 - Install YuE Studio.cmd" and wait for Ready.
+   This downloads the music model, Ollama, and Granite 4.2 3B + 8B.
+   Allow roughly 14 GB of downloads and 25 GB of free disk space.
+   If interrupted, run Install again. An internet connection is needed for setup.
+3. Double-click "2 - Run YuE Studio.cmd". Local features then work offline.
+   Existing Ollama models are reused; only missing Granite files are downloaded.
+   Your other local text models are available in the model picker too.
+   A compatible running Ollama is reused and left running. Otherwise this app
+   starts and stops its own bundled writer. No separate setup or account is needed.
+
+MAKE MUSIC FROM A SHORT IDEA
+Open "From an idea", choose Ollama and a Granite model, and describe the song.
+3B is the lighter option; 8B is also available. Choose a target length and Write.
+Review or edit the title, lyrics and sound direction, then "Use this draft".
+Press "Compose a take" to turn the draft into music. Writing alone makes no audio.
+Applying a draft offers Restore previous draft if you change your mind.
+
+WRITE YOUR OWN SONG
+Type a title, lyrics with labels such as [Verse] and [Chorus], and a sound direction.
+Describe genre, language, instruments, mood, tempo and how the voice should sound.
+Starting points are editable examples. Your composition saves automatically.
+Direct goes straight to audio. Melody plans a melody first; Melody + chords
+also plans harmony. "Bring your own melody" imports an ABC notation file;
+the notation preview and score export refer to your supplied score.
+
+GENERATION AND FINE CONTROL
+Compose makes a full take. Preview 30s makes a separate short test.
+Fine control includes steps, guidance, seed, duration ceiling, sampling,
+planning controls, CPU/Vulkan, threads and Efficient Q8 storage.
+A duration ceiling is a maximum: it may cut a phrase or finish earlier.
+More steps or longer songs can take more time and memory.
+Wait for memory queues the request until the headroom estimate passes.
+Computer headroom shows current GPU, RAM and commit memory estimates.
+Stop/Cancel waiting cancels the current request. Closing also stops active work.
+If a take fails, Generation history preserves its settings, seed and log.
+Retry same take tries those exact settings again; Restore settings edits them.
+
+LISTEN, SAVE AND REUSE
+The player supports play/pause, seeking, looping, volume and playback speed.
+Every finished track is saved in Takes. Search, favorite, listen or download WAV.
+Download JSON preserves the generation settings; supplied ABC can also be exported.
+"Use settings" loads a track as a new variation. SEED buttons copy its actual seed.
+A blank generation seed picks a new seed. Reusing a seed is most meaningful
+when you also reuse the lyrics, style and other settings.
+
+SPELLING AND DELETION
+Right-click an underlined word for corrections or Add to dictionary.
+Trash icons in Takes and Generation history move items to Trash.
+Undo deletion or Restore brings them back, including after a restart.
+In Trash, select items and confirm Delete permanently to free disk space.
+Tracks and generation-attempt records are separate items.
+
+EXPERIMENTAL RADIO
+Open Radio, then Station settings. Enter an idea and a sound baseline,
+choose the host model, stable seed, duration, buffer size and song limit.
+"Use current sound & settings" copies the main composition's sound/render controls.
+Start builds a first buffer and attempts playback. Play lets you join early.
+Pause pauses listening; Stop station also stops writing/rendering.
+Skip goes to the next ready song. Finished radio songs also appear in Takes.
+Set Songs this session to 0 to continue until Stop, or use a small test limit.
+The next song is prepared while music plays. If generation falls behind,
+the player waits honestly for the buffer to refill. Smooth endless play is not assured.
+Reopening never silently resumes the station or playback.
+
+TALK TO THE RADIO HOST
+Send suggestions in the host box. Visible notes under "Things to keep" guide future songs.
+You can add a memory or use its X to forget it. Direct commands:
+  /remember vocals=softly rapped verses
+  /forget vocals
+  /style warm jazz rap, dry drums, rounded bass
+  /reset
+Reset clears active memories, keeping the visible idea/style and conversation record.
+Forgotten notes are removed from future writing context; already prepared songs
+may still reflect the old direction. Host messages can be sent before Start.
+
+OPTIONAL HOSTED WRITING
+In From an idea > Connection, choose DeepInfra or OpenAI and enter your own key.
+Refresh the model list and choose a compatible writing model. Radio shares the connection.
+These writing and host-chat calls use that account's API credits. Music still runs locally.
+Keys are encrypted by Windows; remove a key in Connection when it is no longer needed.
+
+LOOKING AFTER YOUR COPY
+This download starts with no personal songs, drafts, keys or conversations.
+Your new work lives in data/; exported files go in exports/. Back up data/.
+Keep current graphics drivers installed. A capable dedicated GPU is recommended;
+CPU rendering can be very slow. Stop heavy competing tasks if memory is insufficient.
+YuE2 model weights require attribution and noncommercial use. See licenses/ and
+READ ME FIRST.md for sources, licences, limitations and further details.

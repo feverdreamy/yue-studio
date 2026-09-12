@@ -1,0 +1,102 @@
+[
+  {
+    "path": "runtime/audiocpp_cli.exe",
+    "bytes": 77659648,
+    "sha256": "79be45141a5e03d19455fdd3c8f65ca01f541658e41a2a51a712f9c057f9a0c0"
+  },
+  {
+    "path": "runtime/LICENSE",
+    "bytes": 10276,
+    "sha256": "8f0b762d062e1ec79a3e73189b29474051c0e957973f43146aefeb03f2e11581"
+  },
+  {
+    "path": "runtime/model_specs/yue2.json",
+    "bytes": 11420,
+    "sha256": "0db1e83ee01ca7e7823d6fdd3dfba8e5509f206e03fdfba54a82e04614c4008f"
+  },
+  {
+    "path": "runtime/msvcp140.dll",
+    "bytes": 557728,
+    "sha256": "0f885b509a685d2bbfa652fed26b5fb31d88fbdab0a978c641d1c7b8aa460aa9"
+  },
+  {
+    "path": "runtime/msvcp140_1.dll",
+    "bytes": 35952,
+    "sha256": "bfad5aef4c63a669e3c140655cdfdf395b6c979b400a447bd5dcb65ed8826c3d"
+  },
+  {
+    "path": "runtime/msvcp140_2.dll",
+    "bytes": 280200,
+    "sha256": "3ea06f0ee098b4823cb79599df3780e7f23cce52c19aac31d2a0d47efe33a5e9"
+  },
+  {
+    "path": "runtime/msvcp140_atomic_wait.dll",
+    "bytes": 50304,
+    "sha256": "640b2aefced484d0368eea5bdd06addd0658a3a70a49256e560d6923b404a479"
+  },
+  {
+    "path": "runtime/msvcp140_codecvt_ids.dll",
+    "bytes": 31872,
+    "sha256": "f2069a52880ec885ee7f0511186100eb7fada0411a2b4948fafea7735b878a18"
+  },
+  {
+    "path": "runtime/runtime.json",
+    "bytes": 451,
+    "sha256": "55e4b7181a1253a6203460bbbeb7fbc4f26c9523f3072d18ce13dc33f6756352"
+  },
+  {
+    "path": "runtime/vcomp140.dll",
+    "bytes": 193152,
+    "sha256": "55aba23cdcd6484fbb06f4155b8ca75adfce7a881f10afd0c49457165e677164"
+  },
+  {
+    "path": "runtime/vcruntime140.dll",
+    "bytes": 124544,
+    "sha256": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066"
+  },
+  {
+    "path": "runtime/vcruntime140_1.dll",
+    "bytes": 49792,
+    "sha256": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f"
+  },
+  {
+    "path": "runtime/vcruntime140_threads.dll",
+    "bytes": 38528,
+    "sha256": "219915cf20822f34d5e7c1fdd4e21ae7f3396881096c51036225fb8f84b47afa"
+  },
+  {
+    "path": "licenses/abcjs-LICENSE.txt",
+    "bytes": 1135,
+    "sha256": "d7bdcd152b978adee22a2f9b92a4d72c4ec2c20a86512766c7c210b462b54702"
+  },
+  {
+    "path": "licenses/lucide-react-LICENSE.txt",
+    "bytes": 2004,
+    "sha256": "668dcc52803480e0a026b31140a4cae668772663cd764e5991d252eef03f98db"
+  },
+  {
+    "path": "licenses/OLLAMA-LICENSE.txt",
+    "bytes": 1058,
+    "sha256": "5934ed2ce0d15154bcdb9c85203210abac0da4314af34081e36df4599f90b226"
+  },
+  {
+    "path": "licenses/react-dom-LICENSE.txt",
+    "bytes": 1088,
+    "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"
+  },
+  {
+    "path": "licenses/react-LICENSE.txt",
+    "bytes": 1088,
+    "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"
+  },
+  {
+    "path": "licenses/scheduler-LICENSE.txt",
+    "bytes": 1088,
+    "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"
+  },
+  {
+    "path": "licenses/YuE2-MODEL-LICENSE.txt",
+    "bytes": 20309,
+    "sha256": "060985741d20e70613b4c189c7de106cabd3fb2109fbbfb6d705c9d619417dd0"
+  }
+]

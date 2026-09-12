@@ -1,0 +1,16 @@
+node_modules/
+dist/
+desktop/
+data/
+exports/
+models/
+runtime/
+writer/
+.install-cache/
+releases/
+portable.json
+.env
+.env.*
+*.log
+distribution/runtime/
+tests/.tmp/
