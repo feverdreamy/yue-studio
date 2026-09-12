@@ -94,3 +94,8 @@ Keep current graphics drivers installed. A capable dedicated GPU is recommended;
 CPU rendering can be very slow. Stop heavy competing tasks if memory is insufficient.
 YuE2 model weights require attribution and noncommercial use. See licenses/ and
 READ ME FIRST.md for sources, licences, limitations and further details.
+
+INSTALLATION HELP
+OneDrive folders are supported. If setup cannot read a cloud-only file, make the
+whole folder available offline. A failed setup saves details in install-log.txt.
+Keep the installer window open to read its error and the log location.

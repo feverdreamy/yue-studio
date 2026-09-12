@@ -1,4 +1,4 @@
-# Windows 1.4.0 release checks
+# Windows 1.4.1 release checks
 
 - TypeScript check, production build and Electron packaging passed.
 - Desktop shortcut creation passed in an isolated desktop folder. Memory admission tests confirm the default wait and explicit Try anyway behavior for known shortages and missing readings; radio forwards the chosen policy.
@@ -9,3 +9,5 @@
 - The packaged renderer, server and Electron files match their build inputs byte for byte. Bundled runtime/licence hashes, ZIP extraction integrity and personal-path/credential-pattern checks passed.
 
 This release did not complete fresh full-size downloads or an inference comparison of Granite 3B and 8B. The installer uses pinned official download URLs, sizes and SHA-256 hashes. Music performance on other PCs, sustained radio throughput, physical window interactions and a fresh listening review are not established by these checks.
+
+The installer now distinguishes OneDrive cloud placeholders from symbolic links and junctions. Checks used the production manifest extracted with the Windows .NET ZIP reader, simulated cloud placeholder metadata, a real junction and missing-file failures. Cloud placeholders passed; junctions remained blocked; errors were retained in install-log.txt.

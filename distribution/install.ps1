@@ -1,8 +1,11 @@
-param([string]$CacheRoot = '', [string]$WriterSource = '', [string]$ModelStore = '', [string]$DesktopDirectory = '', [switch]$SkipQualityModel)
+param([string]$CacheRoot = '', [string]$WriterSource = '', [string]$ModelStore = '', [string]$DesktopDirectory = '', [switch]$SkipQualityModel, [switch]$CheckOnly)
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 $root = [IO.Path]::GetFullPath($PSScriptRoot)
 $modelRoot = ''
+$stage = 'Opening installation files'
+$transcriptStarted = $false
+$logPath = Join-Path $root 'install-log.txt'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 function Local-Path([string]$relative) {
@@ -10,7 +13,12 @@ function Local-Path([string]$relative) {
   if (-not $target.StartsWith($root + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'An installation path escaped its folder.' }
   $ancestor = $target
   while ($ancestor -and $ancestor -ne $root) {
-    if ((Test-Path -LiteralPath $ancestor) -and ((Get-Item -LiteralPath $ancestor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)) { throw "The installation path contains a link: $ancestor" }
+    if (Test-Path -LiteralPath $ancestor) {
+      $item = Get-Item -LiteralPath $ancestor -Force
+      # Cloud placeholders also have ReparsePoint set; only actual filesystem
+      # redirects can move a dependency outside the installation folder.
+      if ($item.LinkType -in @('SymbolicLink', 'Junction')) { throw "A symbolic link or junction was found in the installation: $ancestor. Extract the complete release ZIP into a normal folder, then run Install there." }
+    }
     $ancestor = [IO.Path]::GetDirectoryName($ancestor)
   }
   return $target
@@ -75,11 +83,23 @@ function Expand-Checked([string]$archive, [string]$relative) {
 
 $lock = $null
 try {
+  try { $null = Start-Transcript -LiteralPath $logPath -Force; $transcriptStarted = $true }
+  catch {
+    $logPath = Join-Path ([IO.Path]::GetTempPath()) ('YuE-install-' + [Guid]::NewGuid().ToString('N') + '.txt')
+    try { $null = Start-Transcript -LiteralPath $logPath -Force; $transcriptStarted = $true } catch {}
+  }
   Write-Host "`nYuE Studio - first-time installation`n" -ForegroundColor Cyan
   Write-Host 'Music, writing and radio run locally after setup. No account or API key is needed.'
   Write-Host 'YuE2 model weights are licensed for noncommercial use. See licenses/YuE2-MODEL-LICENSE.txt.'
-  $manifest = Get-Content -LiteralPath (Local-Path 'install-manifest.json') -Raw | ConvertFrom-Json
+  $manifestPath = Local-Path 'install-manifest.json'
+  if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) { throw 'The installation files are incomplete: install-manifest.json is missing. Right-click YuE-Studio-Windows-1.4.1.zip, choose Extract All, then open the extracted YuE Studio folder and run Install. Do not run Install inside the ZIP or copy only its shortcut.' }
+  try { $manifest = [IO.File]::ReadAllText($manifestPath) | ConvertFrom-Json }
+  catch { throw "The installation manifest could not be read: $($_.Exception.Message). If this is a cloud-synced folder, make the whole folder available offline, or extract a new copy into Downloads." }
   if ($manifest.schemaVersion -ne 1) {throw 'Unsupported installation manifest.'}
+  foreach ($relative in @('desktop/YuE Studio.exe', 'runtime/audiocpp_cli.exe', 'runtime/runtime.json')) {
+    if (-not (Test-Path -LiteralPath (Local-Path $relative) -PathType Leaf)) { throw "The release is incomplete: $relative is missing. Download the Windows release ZIP, choose Extract All, and keep its folders together. GitHub's source-code ZIP does not include the desktop runtime." }
+  }
+  if ($CheckOnly) { Write-Host 'Installation files checked successfully. No models were downloaded or settings changed.' -ForegroundColor Green; return }
   if (-not (Get-Command curl.exe -ErrorAction SilentlyContinue)) {throw 'Windows curl.exe is required. Use an updated Windows 10 or Windows 11 installation.'}
   $lock = [IO.File]::Open((Local-Path '.installation.lock'),[IO.FileMode]::OpenOrCreate,[IO.FileAccess]::ReadWrite,[IO.FileShare]::None)
   $desktopExe = Local-Path 'desktop/YuE Studio.exe'
@@ -93,7 +113,9 @@ try {
   $modelRoot=$modelRoot.TrimEnd([IO.Path]::DirectorySeparatorChar)
   Write-Host "Model store: $modelRoot"
   Write-Host 'Existing models stay in place. Only missing or damaged pinned Granite files are downloaded.'
+  $stage = 'Downloading the music model'
   foreach ($entry in $manifest.music) { $null = Obtain $entry }
+  $stage = 'Installing Ollama'
   if(-not $WriterSource){$WriterSource=Join-Path $env:LOCALAPPDATA 'Programs/Ollama'}
   $reuseWriter = $true
   foreach($entry in $manifest.writerRuntimeFiles){
@@ -114,6 +136,7 @@ try {
       Expand-Checked $archive 'writer'
     }
   }
+  $stage = 'Installing Granite writing models'
   foreach ($model in $manifest.writers) {
     if ($SkipQualityModel -and $model.optional) {continue}
     foreach ($entry in $model.files) { $null = Obtain $entry }
@@ -121,6 +144,7 @@ try {
     [IO.Directory]::CreateDirectory([IO.Path]::GetDirectoryName($modelManifest)) | Out-Null
     [IO.File]::WriteAllText($modelManifest,$model.manifestJson,[Text.UTF8Encoding]::new($false))
   }
+  $stage = 'Checking the music engine'
   Write-Host 'Checking the music engine and detecting this computer...'
   $runtimeExe = Local-Path 'runtime/audiocpp_cli.exe'
   $probe = [Diagnostics.Process]::new()
@@ -184,6 +208,13 @@ try {
   Write-Host "`nReady. Double-click 2 - Run YuE Studio.cmd.`n" -ForegroundColor Green
 } catch {
   Write-Host "`nInstallation did not finish: $($_.Exception.Message)" -ForegroundColor Red
+  Write-Host "Stage: $stage"
+  Write-Host $_.InvocationInfo.PositionMessage
   Write-Host 'Your songs and settings were not removed. Run Install again after resolving the problem.'
+  if ($transcriptStarted) { Write-Host "Error details are saved in: $logPath" }
+  else { Write-Host 'A log could not be saved. The full error is shown above; copy this text if help is needed.' }
   exit 1
-} finally {if($lock){$lock.Dispose()}}
+} finally {
+  if($lock){$lock.Dispose()}
+  if($transcriptStarted){try{$null = Stop-Transcript}catch{}}
+}

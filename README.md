@@ -4,7 +4,7 @@ A Windows desktop for making songs locally with YuE2, with an optional songwriti
 
 ## Download and run
 
-Download **YuE-Studio-Windows-1.4.0.zip** from [Releases](https://github.com/feverdreamy/yue-studio/releases/latest). Use the release ZIP, not GitHub's automatically generated source-code ZIP.
+Download **YuE-Studio-Windows-1.4.1.zip** from [Releases](https://github.com/feverdreamy/yue-studio/releases/latest). Use the release ZIP, not GitHub's automatically generated source-code ZIP.
 
 1. Extract the whole ZIP into a writable folder, such as a folder on your Desktop. Do not run it inside the ZIP.
 2. Double-click **1 - Install YuE Studio.cmd**. Keep it open until it says Ready.
