@@ -1,4 +1,4 @@
-param([string]$CacheRoot = '', [string]$WriterSource = '', [string]$ModelStore = '', [switch]$SkipQualityModel)
+param([string]$CacheRoot = '', [string]$WriterSource = '', [string]$ModelStore = '', [string]$DesktopDirectory = '', [switch]$SkipQualityModel)
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 $root = [IO.Path]::GetFullPath($PSScriptRoot)
@@ -162,6 +162,24 @@ try {
   }
   $portable=@{version=1;writerModels=$modelRoot;existingOllamaUrl=$existingUrl;recommendedModel='granite4.2:3b'} | ConvertTo-Json
   [IO.File]::WriteAllText((Local-Path 'portable.json'),$portable,[Text.UTF8Encoding]::new($false))
+  try {
+    if (-not $DesktopDirectory) { $DesktopDirectory = [Environment]::GetFolderPath('Desktop') }
+    [IO.Directory]::CreateDirectory($DesktopDirectory) | Out-Null
+    $shortcutShell = New-Object -ComObject WScript.Shell
+    $shortcutPath = Join-Path $DesktopDirectory 'YuE Studio.lnk'
+    $suffix = 1
+    while ((Test-Path -LiteralPath $shortcutPath) -and $shortcutShell.CreateShortcut($shortcutPath).TargetPath -ne $desktopExe) {
+      $shortcutPath = Join-Path $DesktopDirectory ("YuE Studio (shared $suffix).lnk")
+      $suffix++
+    }
+    $shortcut = $shortcutShell.CreateShortcut($shortcutPath)
+    $shortcut.TargetPath = $desktopExe
+    $shortcut.WorkingDirectory = $root
+    $shortcut.IconLocation = $desktopExe + ',0'
+    $shortcut.Description = 'Make music with YuE Studio'
+    $shortcut.Save()
+    Write-Host 'Desktop shortcut created. Open YuE Studio from your desktop.'
+  } catch { Write-Host 'Setup is complete, but the desktop shortcut could not be created. Use 2 - Run YuE Studio.cmd instead.' -ForegroundColor Yellow }
   if (-not $device) {Write-Host 'No Vulkan GPU was found. CPU rendering is available but can be very slow.' -ForegroundColor Yellow}
   Write-Host "`nReady. Double-click 2 - Run YuE Studio.cmd.`n" -ForegroundColor Green
 } catch {

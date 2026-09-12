@@ -6,7 +6,8 @@ FIRST TIME
    This downloads the music model, Ollama, and Granite 4.2 3B + 8B.
    Allow roughly 14 GB of downloads and 25 GB of free disk space.
    If interrupted, run Install again. An internet connection is needed for setup.
-3. Double-click "2 - Run YuE Studio.cmd". Local features then work offline.
+3. Open the new YuE Studio desktop icon, or "2 - Run YuE Studio.cmd".
+   Keep the extracted app folder in place. Local features then work offline.
    Existing Ollama models are reused; only missing Granite files are downloaded.
    Your other local text models are available in the model picker too.
    A compatible running Ollama is reused and left running. Otherwise this app
@@ -33,7 +34,10 @@ Fine control includes steps, guidance, seed, duration ceiling, sampling,
 planning controls, CPU/Vulkan, threads and Efficient Q8 storage.
 A duration ceiling is a maximum: it may cut a phrase or finish earlier.
 More steps or longer songs can take more time and memory.
-Wait for memory queues the request until the headroom estimate passes.
+Memory check: Wait for memory queues the request until the estimate passes.
+Choose Try anyway to attempt generation even below the memory estimate. It may fail.
+If already waiting, cancel waiting, choose Try anyway, then compose again.
+Radio has its own Memory check option in Station settings.
 Computer headroom shows current GPU, RAM and commit memory estimates.
 Stop/Cancel waiting cancels the current request. Closing also stops active work.
 If a take fails, Generation history preserves its settings, seed and log.

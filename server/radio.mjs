@@ -99,7 +99,7 @@ export async function createRadioStation({dataRoot,compose,chat,generate,getJob,
         let result;try{result=await compose({provider:state.config.provider,model:state.config.model,idea,durationSeconds:state.config.durationSeconds},{signal:controller.signal});}catch(error){if(controller.signal.aborted||epoch!==operationEpoch||revision!==operationRevision)return;throw error;}finally{controller=null;}
         if(epoch!==operationEpoch||revision!==operationRevision||state.status!=='running')return;
         const song=validateSong(result.song??result),cap=state.config.durationSeconds*25;
-        const request=validateRequest({...state.config.generation,title:song.title,lyrics:song.lyrics,style:arrangedStyle(song,state.memories),seed:state.config.seed,semantic_max_tokens:cap,semantic_min_tokens:Math.min(state.config.generation.semantic_min_tokens,cap),wait_for_memory:true});
+        const request=validateRequest({...state.config.generation,title:song.title,lyrics:song.lyrics,style:arrangedStyle(song,state.memories),seed:state.config.seed,semantic_max_tokens:cap,semantic_min_tokens:Math.min(state.config.generation.semantic_min_tokens,cap),wait_for_memory:state.config.generation.wait_for_memory});
         pendingDraft={id:randomUUID(),request,preparedAt:timestamp(),provider:state.config.provider,model:state.config.model,...(result.usage?{usage:result.usage}:{})};await save();
       }
       const engineBusy=await isBusy();

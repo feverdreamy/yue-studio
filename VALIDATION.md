@@ -1,6 +1,7 @@
 # Windows 1.4.0 release checks
 
 - TypeScript check, production build and Electron packaging passed.
+- Desktop shortcut creation passed in an isolated desktop folder. Memory admission tests confirm the default wait and explicit Try anyway behavior for known shortages and missing readings; radio forwards the chosen policy.
 - 13 server acceptance checks passed, covering input validation, job cancellation, audio validation/export, persistence and shutdown. These use an injected engine fixture.
 - The actual Windows installer completed twice using a small isolated dependency cache and external model store. It preserved unrelated models, registered both writer tags, reused existing files and detected Vulkan devices with the bundled native music engine.
 - The real bundled-writer startup code started and stopped an installed Ollama 0.33.3 process in an isolated test. A simulated compatible existing service was reused and remained running when the app closed.

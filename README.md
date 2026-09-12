@@ -8,7 +8,7 @@ Download **YuE-Studio-Windows-1.4.0.zip** from [Releases](https://github.com/fev
 
 1. Extract the whole ZIP into a writable folder, such as a folder on your Desktop. Do not run it inside the ZIP.
 2. Double-click **1 - Install YuE Studio.cmd**. Keep it open until it says Ready.
-3. Double-click **2 - Run YuE Studio.cmd**.
+3. Open **YuE Studio** using its new desktop icon, or double-click **2 - Run YuE Studio.cmd**.
 
 The installer checks and downloads the YuE2 music weights, Ollama runtime and GPU libraries, and **Granite 4.2 3B and 8B**. Downloads use pinned versions and SHA-256 checks. Run Install again to resume interrupted downloads or repair missing files. Existing Ollama models are reused in place: setup respects `OLLAMA_MODELS`, then detects the standard Ollama store. Only missing or damaged Granite files are downloaded. Other installed text models appear in the model picker. An exact matching installed Ollama runtime is also reused to avoid downloading it again.
 
@@ -25,6 +25,7 @@ Write lyrics with markers such as `[Verse]` and `[Chorus]`, describe the sound, 
 The smaller 3B model is selected first for a lighter writing workload. 8B is also installed and can be selected in the model picker. These models are alternatives for writing and host chat; YuE2 still generates the actual music. A completed comparative songwriting-quality benchmark is not claimed for this release.
 
 - **Preview 30s** generates a shorter test without changing the full composition.
+- **Memory check → Try anyway** attempts a take even when RAM, GPU memory or commit headroom falls below the estimate. It may fail if memory runs out. If already waiting, cancel that wait first, select Try anyway, then compose again. Radio has the same option in Station settings.
 - **Fine control** includes the seed, sampling, planning mode, duration ceiling, steps and memory options.
 - **Takes** preserves finished audio and settings. Seed buttons copy the exact saved seed.
 - Trash icons remove tracks and finished attempts. Undo or Trash restores them; permanent deletion frees the space.

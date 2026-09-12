@@ -129,9 +129,8 @@ export async function createStudioServer(options = {}) {
       if (!request.seed) request.seed = String(randomBytes(4).readUInt32LE());
       if (!request.title) request.title = 'Untitled composition';
       const admission = await memoryCheck(request, true);
-      if (admission.assessment.state === 'waiting' && !request.wait_for_memory) throw new ApiError(409, `${admission.assessment.reasons.join(' ')} Enable Wait for memory to hold this take until there is more room.`);
       const id = randomUUID(), now = new Date().toISOString();
-      const waiting = admission.assessment.state === 'waiting' || (admission.assessment.state === 'unknown' && request.wait_for_memory);
+      const waiting = request.wait_for_memory && admission.assessment.state !== 'ready';
       const job = {id, request, runtime: {...status.runtime, memoryProfile:'bounded-256mib-v1'}, deviceIndex: status.deviceIndex, modelManifest: await jsonRead(path.join(status.modelDirectory, 'manifest.json'), null), status: waiting ? 'waiting' : 'running', stage: waiting ? 'Waiting for memory' : 'Starting the engine', startedAt: now, queuedAt:waiting ? now : undefined, resourceCheck:admission.assessment, resourcesAtSubmission:admission.resources, sessionOptions:[...metadataSessionOptions, ...(request.weight_storage === 'q8_0' ? ['yue2.model_weight_type=q8_0'] : [])], log: [], takeId: null, ...(metadata.retryOf ? {retryOf:metadata.retryOf} : {}), ...(metadata.radio ? {radio:metadata.radio} : {})};
       if (waiting) {
         job.waitingReason = admission.assessment.state === 'unknown' ? 'Waiting for memory readings. If they stay unavailable, turn off Wait for memory to attempt generation without this check.' : admission.assessment.reasons.join(' ');
